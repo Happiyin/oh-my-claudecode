@@ -456,10 +456,10 @@ async function processKeywordDetector(input: HookInput): Promise<HookOutput> {
       case "codex":
       case "gemini": {
         messages.push(
-          `[MAGIC KEYWORD: omc-teams]\n` +
-          `User intent: delegate to ${keywordType} CLI workers via omc-teams.\n` +
+          `[MAGIC KEYWORD: team]\n` +
+          `User intent: delegate to ${keywordType} CLI workers via omc team CLI.\n` +
           `Agent type: ${keywordType}. Parse N from user message (default 1).\n` +
-          `Invoke: /omc-teams N:${keywordType} "<task from user message>"`
+          `Invoke: omc team start --agent ${keywordType} --count N --task "<task from user message>"`
         );
         break;
       }
@@ -507,7 +507,7 @@ async function processPersistentMode(input: HookInput): Promise<HookOutput> {
 
   // Lazy-load persistent-mode and todo-continuation modules
   const { checkPersistentModes, createHookOutput, shouldSendIdleNotification, recordIdleNotificationSent } = await import("./persistent-mode/index.js");
-  const { isExplicitCancelCommand } = await import("./todo-continuation/index.js");
+  const { isExplicitCancelCommand, isAuthenticationError } = await import("./todo-continuation/index.js");
 
   // Extract stop context for abort detection (supports both camelCase and snake_case)
   const stopContext: StopContext = {
@@ -576,6 +576,12 @@ async function processPersistentMode(input: HookInput): Promise<HookOutput> {
 
   // Explicit cancel should suppress team continuation prompts.
   if (isExplicitCancelCommand(stopContext)) {
+    return output;
+  }
+
+  // Auth failures (401/403/expired OAuth) should not inject Team continuation.
+  // Otherwise stop hooks can force a retry loop while credentials are invalid.
+  if (isAuthenticationError(stopContext)) {
     return output;
   }
 

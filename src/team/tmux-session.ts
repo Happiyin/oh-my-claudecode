@@ -142,10 +142,11 @@ export function buildWorkerStartCommand(config: WorkerPaneConfig): string {
     });
 
     const shellName = shellNameFromPath(shell) || 'bash';
+    const execArgsCommand = shellName === 'fish' ? 'exec $argv' : 'exec "$@"';
     const rcFile = process.env.HOME ? `${process.env.HOME}/.${shellName}rc` : '';
     const script = shouldSourceRc && rcFile
-      ? `[ -f ${shellEscape(rcFile)} ] && . ${shellEscape(rcFile)}; exec "$@"`
-      : 'exec "$@"';
+      ? `[ -f ${shellEscape(rcFile)} ] && . ${shellEscape(rcFile)}; ${execArgsCommand}`
+      : execArgsCommand;
 
     return [
       'env',
@@ -547,7 +548,7 @@ export function shouldAttemptAdaptiveRetry(args: {
   paneInCopyMode: boolean;
   retriesAttempted: number;
 }): boolean {
-  if (process.env.OMX_TEAM_AUTO_INTERRUPT_RETRY === '0') return false;
+  if (process.env.OMC_TEAM_AUTO_INTERRUPT_RETRY === '0') return false;
   if (args.retriesAttempted >= 1) return false;
   if (args.paneInCopyMode) return false;
   if (!args.paneBusy) return false;
