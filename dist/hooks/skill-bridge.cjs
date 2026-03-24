@@ -70,10 +70,7 @@ var KOREAN_MAP = {
   "trace and interview": ["\uD2B8\uB808\uC774\uC2A4 \uC564 \uC778\uD130\uBDF0"],
   // === deep-pipeline skill ===
   "deep-pipeline": ["\uB525\uD30C\uC774\uD504\uB77C\uC778", "\uB525 \uD30C\uC774\uD504\uB77C\uC778"],
-  "deep-pipe": ["\uB525\uD30C\uC774\uD504"],
-  "pipeline-cycle": ["\uD30C\uC774\uD504\uB77C\uC778 \uC0AC\uC774\uD074"],
-  "dev-pipeline": ["\uAC1C\uBC1C \uD30C\uC774\uD504\uB77C\uC778"],
-  "dev-cycle": ["\uAC1C\uBC1C \uC0AC\uC774\uD074"]
+  "deep-pipe": ["\uB525\uD30C\uC774\uD504"]
 };
 function expandTriggers(triggersLower) {
   const expanded = new Set(triggersLower);
