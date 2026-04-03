@@ -19,6 +19,19 @@ _Don't learn Claude Code. Just use OMC._
 
 ---
 
+## Core Maintainers
+
+| Role | Name | GitHub |
+| --- | --- | --- |
+| Creator & Lead | Yeachan Heo | [@Yeachan-Heo](https://github.com/Yeachan-Heo) |
+| Maintainer | HaD0Yun | [@HaD0Yun](https://github.com/HaD0Yun) |
+
+## Ambassadors
+
+| Name | GitHub |
+| --- | --- |
+| Sigrid Jin | [@sigridjineth](https://github.com/sigridjineth) |
+
 ## Quick Start
 
 **Step 1: Install**
